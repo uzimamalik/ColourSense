@@ -12,5 +12,5 @@ void main() async {
   final cameraUsed = cameras.first;
   runApp(MaterialApp(
     theme: ThemeData.dark(),
-    home: const Splash()));
+    home: Splash(camera: cameraUsed)));
 }
