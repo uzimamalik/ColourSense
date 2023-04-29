@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:app/splash.dart';
 
 import 'camera.dart';
 
@@ -12,6 +12,5 @@ void main() async {
   final cameraUsed = cameras.first;
   runApp(MaterialApp(
     theme: ThemeData.dark(),
-    home: CameraPage(
-      camera: cameraUsed,)));
+    home: const Splash()));
 }
