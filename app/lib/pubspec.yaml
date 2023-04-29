@@ -1,0 +1,6 @@
+flutter:
+
+  uses-material-design: True
+
+  assets:
+  - asset/image.png
