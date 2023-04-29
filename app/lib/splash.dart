@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:app/main.dart';
 import 'dart:io';
 
-import 'main.dart';
-
 class Splash extends StatefulWidget {
   const Splash({super.key});
 
@@ -28,21 +26,8 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center (
-      child: Container(
-        //child: Image.file(File("assets/images/im.png")),
-        child: Column(
-          children: const [
-            Text(
-              'Your journey to fashion starts here!',
-              style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold
-              )
-            ),          
-          ],
-        )
-      )
-      )
+          child: Image.asset('assets/images/im.png', width: 250, height: 250)
+      ),
     );
   }
 }
