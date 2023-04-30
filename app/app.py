@@ -1,6 +1,9 @@
 from flask import Flask, jsonify
 import cv2
 import numpy as np
+import sys
+
+image_path = sys.argv[1]
 
 app = Flask(__name__)
 
@@ -8,7 +11,7 @@ app = Flask(__name__)
 @app.route('/')
 def detect_colour():
     # Load the image, convert to grayscale
-    img = cv2.imread(image_path())
+    img = cv2.imread(image_path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Apply Otsu's thresholding to obtain a binary image

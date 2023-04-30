@@ -107,8 +107,8 @@ class DisplayPictureScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 _processImage();
-                image_path(imagePath);
-                Navigator.pop(context);
+                runPythonScript(imagePath);
+                //Navigator.pop(context);
             }, 
             child: const Text("Done")),
         ])
@@ -118,13 +118,13 @@ class DisplayPictureScreen extends StatelessWidget {
   } 
 }
 
-String image_path(String imagePath) {
-  return imagePath;
+void runPythonScript(String imagePath) async {
+  var process = await Process.run('python', ['app.py', imagePath]);
+  print(process.stdout);
 }
-
 
 void _processImage() async {
   var data = await getData("http://10.0.2.2:5000/");
   var decodedData = jsonDecode(data);
-  print(decodedData['query']);
+  print(decodedData);
 }
