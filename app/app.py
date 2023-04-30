@@ -1,0 +1,35 @@
+from flask import Flask, jsonify
+import cv2
+import numpy as np
+import sys
+
+image_path = sys.argv[1]
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def detect_colour():
+    # Load the image, convert to grayscale
+    img = cv2.imread(image_path)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # Apply Otsu's thresholding to obtain a binary image
+    #blur = cv2.GaussianBlur(img,(5,5),0)
+    _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+
+    # Find contours in the binary image
+    contours, hierarchy = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    largest_contour = max(contours, key=cv2.contourArea)
+
+    # Create a mask from the contour
+    mask = cv2.drawContours(np.zeros_like(binary), [largest_contour], 0, (255, 255, 255), -1)
+
+    # Compute the average colour of the clothing item
+    average_colour = cv2.mean(img, mask=mask)
+
+    return jsonify(average_colour)
+
+if __name__ == '__main__':
+    app.run()
