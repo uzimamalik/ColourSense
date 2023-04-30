@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as img;
 
 // allows the user to take pictures
 class CameraPage extends StatefulWidget {
@@ -81,6 +82,15 @@ class DisplayPictureScreen extends StatelessWidget {
 
   const DisplayPictureScreen({super.key, required this.imagePath});
 
+  void _processImage() async {
+    // Load the image
+    var bytes = await File(imagePath).readAsBytes();
+    var image = img.decodeImage(bytes)!;
+    var grayscale = img.grayscale(image);
+    var threshold = img.computeOtsuThreshold(grayscale);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,6 +112,7 @@ class DisplayPictureScreen extends StatelessWidget {
             child: const Text("Retake")),
             TextButton(
               onPressed: () {
+                _processImage();
                 Navigator.pop(context);
             }, 
             child: const Text("Done")),
