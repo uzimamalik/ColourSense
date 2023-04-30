@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route('/')
 def detect_colour():
     # Load the image, convert to grayscale
-    img = cv2.imread(image_path)
+    img = cv2.imread('/Users/uzimamalik/Desktop/green.jpg')
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Apply Otsu's thresholding to get a binary image
@@ -28,7 +28,15 @@ def detect_colour():
     mask = cv2.drawContours(np.zeros_like(binary), [largest_contour], 0, (255, 255, 255), -1)
 
     # Compute the average colour of the piece of clothing
-    average_colour = cv2.mean(img, mask=mask)
+    average_colour = cv2.mean(img, mask=mask)[:3]
+
+    average_colour = average_colour[::-1]
+
+    average_colour_dict = {
+        "red": average_colour[0],
+        "green": average_colour[1],
+        "blue": average_colour[2]
+    }
 
     return jsonify(average_colour)
 

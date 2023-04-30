@@ -150,5 +150,8 @@ void runPythonScript(String imagePath) async {
 void _processImage() async {
   var data = await getData("http://10.0.2.2:5000/");
   var decodedData = jsonDecode(data);
-  print(decodedData);
+  var bgrValues = data['average_colour'];
+  var rgbValues = bgrValues.sublist(0, 3).reversed.toList();
+  var hexValue = '#${rgbValues.map((c) => c.toRadixString(16).padLeft(2, '0')).join()}';
+  debugPrint(hexValue);
 }
