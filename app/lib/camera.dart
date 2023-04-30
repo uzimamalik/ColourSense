@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'load.dart';
+import 'package:image/image.dart' as img;
+import 'package:http/http.dart' as http;
+import 'request.dart';
 
 // allows the user to take pictures
 class CameraPage extends StatefulWidget {
@@ -127,6 +131,8 @@ class DisplayPictureScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) {
                   return const Load();
                   }));
+                _processImage();
+                runPythonScript(imagePath);
             }, 
             child: const Text("Done")),
         ])
@@ -134,4 +140,15 @@ class DisplayPictureScreen extends StatelessWidget {
     ),
     );
   } 
+}
+
+void runPythonScript(String imagePath) async {
+  var process = await Process.run('python', ['app.py', imagePath]);
+  print(process.stdout);
+}
+
+void _processImage() async {
+  var data = await getData("http://10.0.2.2:5000/");
+  var decodedData = jsonDecode(data);
+  print(decodedData);
 }
