@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'result.dart';
 
 // allows the user to take pictures
 class CameraPage extends StatefulWidget {
@@ -121,8 +122,11 @@ class DisplayPictureScreen extends StatelessWidget {
             },  
             child: const Text("Retake")),
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
+              onPressed: () async {
+                var message = await Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return const ResultPage(detected: 0xFFbe2f25);
+                  }));
             }, 
             child: const Text("Done")),
         ])
