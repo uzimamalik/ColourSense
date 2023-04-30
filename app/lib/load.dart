@@ -1,7 +1,5 @@
-import 'dart:io';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'empty.dart';
+import 'result.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Load extends StatefulWidget {
@@ -26,7 +24,7 @@ class _LoadState extends State<Load> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(title: "yay")));
+            builder: (context) => const ResultPage(detected: 0xFFD65DB1,)));
   }
 
   @override

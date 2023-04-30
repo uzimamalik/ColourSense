@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'load.dart';
-import 'package:image/image.dart' as img;
-import 'package:http/http.dart' as http;
 import 'request.dart';
 
 // allows the user to take pictures

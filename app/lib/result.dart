@@ -1,6 +1,5 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'camera.dart';
+import 'package:tinycolor2/tinycolor2.dart';
 
 class ResultPage extends StatelessWidget {
   const ResultPage({
@@ -12,6 +11,14 @@ class ResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color detectedColor = Color(detected);
+    TinyColor tinyColor = TinyColor.fromColor(detectedColor);
+    
+    TinyColor color1 = tinyColor.spin(60);
+    color1 = color1.brighten(50);
+
+    TinyColor color2 = tinyColor.spin(300);
+    color2 = color2.darken(50);
+
     return Stack(
       children: [
         const Positioned(top:50, left:50, child: Text('Detected colour:', style: TextStyle(fontSize: 20))),
@@ -24,11 +31,11 @@ class ResultPage extends StatelessWidget {
         Positioned(top:250, left:50, child:Row(children: [Container(
           width: 100,
           height: 50,
-          color: getComplementaryColor(detectedColor),
+          color: color1.color,
         ), Container(
           width: 100,
           height: 50,
-          color: getComplementaryColor(detectedColor),
+          color: color2.color,
         )])),
         Positioned(bottom: 50, right: 50,
         child: TextButton(
@@ -40,20 +47,4 @@ class ResultPage extends StatelessWidget {
       ]);
   }
 
-}
-
-Color getComplementaryColor(Color color) {
-  // Convert the color to the HSL color space
-  final hslColor = HSLColor.fromColor(color);
-  // Calculate the complementary hue value (180 degrees away)
-  final hue = (hslColor.hue + 180.0) % 360.0;
-  // Create a new HSL color with the complementary hue and the same saturation and lightness
-  final complementaryHSLColor = HSLColor.fromAHSL(
-    hslColor.alpha,
-    hue,
-    hslColor.saturation,
-    hslColor.lightness,
-  );
-  // Convert the HSL color back to a Flutter color object
-  return complementaryHSLColor.toColor();
 }
