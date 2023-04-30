@@ -11,6 +11,6 @@ void main() async {
   final cameras = await availableCameras();
   final cameraUsed = cameras.first;
   runApp(MaterialApp(
-    theme: ThemeData.dark(),
+    theme: ThemeData.light(),
     home: Splash(camera: cameraUsed)));
 }
