@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'load.dart';
 
 // allows the user to take pictures
 class CameraPage extends StatefulWidget {
@@ -21,6 +22,26 @@ class CameraPageState extends State<CameraPage> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration(seconds: 1), () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Instructions'),
+            content: const Text('Please capture an image of the clothing item you desire to pair, and we will provide the corresponding colors that complement it.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Ok!'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+    );
     _controller = CameraController(
       widget.camera,
       ResolutionPreset.medium,
@@ -101,8 +122,11 @@ class DisplayPictureScreen extends StatelessWidget {
             },  
             child: const Text("Retake")),
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
+              onPressed: () async {
+                var message = await Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return const Load();
+                  }));
             }, 
             child: const Text("Done")),
         ])
